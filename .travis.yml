@@ -9,59 +9,46 @@ env:
 
 matrix:
   include:
-    - os: linux
-      env:
-        - BACKEND=OpenBLAS
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - libopenblas-base
-            - libopenblas-dev
-    - os: linux
-      env:
-        - BACKEND=ATLAS
-      addons:
-        sources:
-          - ubuntu-toolchain-r-test
-        apt:
-          packages:
-            - libatlas-base-dev
+    #########
+    # Linux Machines
+    #########
     - os: linux
       env:
         - BACKEND=Intel10_64lp_seq
-        - BUILD_STATIC=1
+        - BUILD_STATIC=OFF
     - os: linux
       env:
         - BACKEND=Intel10_64lp_seq
+        - BUILD_STATIC=ON
     - os: linux
       env:
         - BACKEND=Intel10_64lp
-        - BUILD_STATIC=1
+        - BUILD_STATIC=OFF
     - os: linux
       env:
         - BACKEND=Intel10_64lp
-    - os: osx
-      env:
-        - BACKEND=Apple
+        - BUILD_STATIC=ON
+
+    #########
+    # OSx Machines
+    #########
     - os: osx
       env:
         - BACKEND=Intel10_64lp_seq
+        - BUILD_STATIC=OFF
     - os: osx
       env:
         - BACKEND=Intel10_64lp_seq
-        - BUILD_STATIC=1
+        - BUILD_STATIC=ON
     - os: osx
       env:
         - BACKEND=Intel10_64lp
+        - BUILD_STATIC=OFF
     - os: osx
       env:
         - BACKEND=Intel10_64lp
-        - BUILD_STATIC=1
-    - os: osx
-      env:
-        - BACKEND=OpenBLAS
+        - BUILD_STATIC=ON
+
 
 before_install:
   # Dependencies required by the CI are installed in ${TRAVIS_BUILD_DIR}/deps/
