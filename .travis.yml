@@ -29,25 +29,6 @@ matrix:
         - BACKEND=Intel10_64lp
         - BUILD_STATIC=ON
 
-    #########
-    # OSx Machines
-    #########
-    - os: osx
-      env:
-        - BACKEND=Intel10_64lp_seq
-        - BUILD_STATIC=OFF
-    - os: osx
-      env:
-        - BACKEND=Intel10_64lp_seq
-        - BUILD_STATIC=ON
-    - os: osx
-      env:
-        - BACKEND=Intel10_64lp
-        - BUILD_STATIC=OFF
-    - os: osx
-      env:
-        - BACKEND=Intel10_64lp
-        - BUILD_STATIC=ON
 
 
 before_install:
