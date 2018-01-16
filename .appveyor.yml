@@ -99,11 +99,5 @@ test_script:
 
 deploy: off
 
-on_failure:
-  - appveyor PushArtifact CMakeCache.txt
-  - appveyor PushArtifact CMakeFiles/CMakeOutput.log
-  - appveyor PushArtifact CMakeFiles/CMakeError.log
-
-
 # on_finish:
 #   - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
