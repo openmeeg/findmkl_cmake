@@ -113,7 +113,7 @@ script:
   - mkdir -p build && cd build
   - export CMAKE_OPTIONS="-DCMAKE_CXX_STANDARD=11 -DBLA_VENDOR=$BACKEND"
   - |
-    if [[ "${BUILD_STATIC}" == "1" ]]; then
+    if [[ "${BUILD_STATIC}" == "ON" ]]; then
       export CMAKE_OPTIONS="${CMAKE_OPTIONS} -DBLA_STATIC=ON"
     fi
   - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then echo $LD_LIBRARY_PATH; fi
