@@ -3,10 +3,6 @@ sudo: true
 language:
   - cpp
 
-env:
-  global:
-    - secure: "ReYURSvDLRz078njJgh2i/KvwLc/3fGPkgjf6mLLoHWgz7vSuh24B5z10Th2UMQo9op66qcZ2WcooYIqeEHGbmYuBGGKd2axsGUEXqoclG9SdNsa5BoCA9iiLlLiMgIO+Kp1EuSbWcrpVRs/BiXya1iN+lpBErsWHGaXJP8idexnCepMLYgzUDu/FNuZJwRHMX1cvqK7wxOkCwXJRqEfbA+fn1/oCb+YAPpEet12kFNu1RRk6g+ui7g5XuAVHISj+UHbr5+GNYR6gD8476EkjUm38ssnPKxTvydj1QXcEw6weRDpevFByum5fDf2vHgojo5dNvhIio4gENkfbwbd2azVitHtE7boByb/AO3z3YcFhDRu0ETgCEZWIDrQWwkAubf+sB2MWyKGCPGQaECrVGDD2JzV6kX0lMCVaPQONggFBmJQwcHodLxXurpupmttJ+W4aZf5EsQsGPIYNegMnkdHAgTHxuPUtyDIlOJfTrUt1qPRh+yKGvmX7/C+AirXFIbxOemTdx3w0Y3CbhVxP2jDoP45rPzC17EI06gdQJaWzx5//LKkwcsAmox0bXrKHDOuMJNWVA6ZhBd3fGascMh4tgdSYc9yuRyAb0ygP0obUXp6PXU0TFxeenCaA9YAZrg6OXzS115lcnak8Xfyi+fmlfjrT8BSVk9bL9/3t2I="
-
 matrix:
   include:
     #########
