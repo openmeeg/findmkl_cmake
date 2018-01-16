@@ -79,12 +79,6 @@ before_build:
 build_script:
   - cmake --build .
 
-after_build:
-  - appveyor PushArtifact CMakeCache.txt
-  - appveyor PushArtifact CMakeFiles/CMakeOutput.log
-  - appveyor PushArtifact CMakeFiles/CMakeError.log
-
-
 test_script:
   - ps: |
       if ($env:BUILD_STATIC -eq 'OFF') {
