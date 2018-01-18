@@ -34,6 +34,10 @@ skip_commits:
 # Add [av skip] to commit messages
   message: /\[av skip\]/
 
+# # To allow remote connection to appveyor
+# init:
+#   - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
 install:
   ############################################################################
   # Install CMake
@@ -87,3 +91,6 @@ test_script:
   - .\Debug\CMakeHelloWorld.exe
 
 deploy: off
+
+# on_finish:
+#   - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
