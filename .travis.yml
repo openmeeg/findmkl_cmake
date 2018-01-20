@@ -108,7 +108,7 @@ before_install:
       if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
         export MKL_INSTALL_DIR=$(pwd)/intel
         export ARCH_FNAME=l_mkl_2018.0.128.tgz
-        download http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/12070/${ARCH_FNAME}
+        travis_wait 30 download http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/12070/${ARCH_FNAME}
         tar -xzf $DL_DIR/${ARCH_FNAME}
         cat l_mkl_2018.0.128/silent.cfg | grep -v EULA | grep -v PSET_INSTALL_DIR > silent.cfg
         echo "ACCEPT_EULA=accept" >> silent.cfg
@@ -119,7 +119,7 @@ before_install:
       else  # Mac
         export MKL_INSTALL_DIR=/opt/intel
         export ARCH_FNAME=m_mkl_2017.4.220.dmg
-        download http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/12185/${ARCH_FNAME}
+        travis_wait 30 download http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/12185/${ARCH_FNAME}
         hdiutil attach $DL_DIR/${ARCH_FNAME}
         cat /Volumes/m_mkl_2017.4.220/m_mkl_2017.4.220.app/Contents/MacOS/silent.cfg | grep -v EULA | grep -v PSET_INSTALL_DIR > silent.cfg
         echo "ACCEPT_EULA=accept" >> silent.cfg
