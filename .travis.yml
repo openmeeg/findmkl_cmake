@@ -3,6 +3,11 @@ sudo: true
 language:
   - cpp
 
+cache:
+  ccache: true
+  directories:
+    - $HOME/downloads
+
 matrix:
   include:
     #########
@@ -51,16 +56,37 @@ before_install:
   - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
   - mkdir -p "${DEPS_DIR}"
 
-  - sudo dpkg --add-architecture i386
-  - sudo apt-get update
-  - sudo apt-get install -y libc6:i386 libncurses5:i386 libstdc++6:i386
+  - |
+    if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
+      sudo dpkg --add-architecture i386
+      sudo apt-get update
+      sudo apt-get install -y libc6:i386 libncurses5:i386 libstdc++6:i386
+    fi
 
   # Travis machines have 2 cores
   - JOBS=2
 
   - cd "${DEPS_DIR}"
+
   ############################################################################
-  # Install a recent CMake (unless already installed on OS X)
+  # Handle caching of downloaded files
+  ############################################################################
+  - export DL_DIR=$HOME/downloads
+  - |
+    function _download() {
+        url="$1"; f="${2:-$(basename $url)}";
+        if [ ! -e $DL_DIR/$f ] ; then
+          mkdir -p $DL_DIR ;
+          echo "Downloading: ${DL_DIR}/$f" ;
+          travis_retry wget --no-verbose $url -O $DL_DIR/$f ;
+        else
+          echo "Reading from cache: ${DL_DIR}/$f" ;
+        fi
+    }
+  - function download() { _download "$1" "" ; }
+
+  ############################################################################
+  # Install a recent CMake
   ############################################################################
   - CMAKE_VERSION=3.10.1
   - |
@@ -69,10 +95,7 @@ before_install:
       mkdir cmake && travis_retry wget --no-check-certificate -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
       export PATH=${DEPS_DIR}/cmake/bin:${PATH}
     else
-      brew install cmake || brew upgrade cmake
-      if [[ "${BACKEND}" == "OpenBLAS" ]]; then
-        brew install openblas
-      fi
+      brew upgrade cmake
     fi
   - which cmake
   - cmake --version
@@ -84,9 +107,9 @@ before_install:
     if [[ "${BACKEND}" == *"Intel"* ]]; then
       if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
         export MKL_INSTALL_DIR=$(pwd)/intel
-        MKL_DOWNLOAD_URL="http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/12070/l_mkl_2018.0.128.tgz"
-        travis_retry wget --no-check-certificate ${MKL_DOWNLOAD_URL}
-        tar -xzf l_mkl_2018.0.128.tgz
+        export ARCH_FNAME=l_mkl_2018.0.128.tgz
+        travis_wait 30 download http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/12070/${ARCH_FNAME}
+        tar -xzf $DL_DIR/${ARCH_FNAME}
         cat l_mkl_2018.0.128/silent.cfg | grep -v EULA | grep -v PSET_INSTALL_DIR > silent.cfg
         echo "ACCEPT_EULA=accept" >> silent.cfg
         echo "PSET_INSTALL_DIR=${MKL_INSTALL_DIR}" >> silent.cfg
@@ -95,9 +118,9 @@ before_install:
         . ${MKL_INSTALL_DIR}/mkl/bin/mklvars.sh intel64 ilp64
       else  # Mac
         export MKL_INSTALL_DIR=/opt/intel
-        MKL_DOWNLOAD_URL="http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/12185/m_mkl_2017.4.220.dmg"
-        travis_retry wget --no-check-certificate ${MKL_DOWNLOAD_URL}
-        hdiutil attach m_mkl_2017.4.220.dmg
+        export ARCH_FNAME=m_mkl_2017.4.220.dmg
+        travis_wait 30 download http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/12185/${ARCH_FNAME}
+        hdiutil attach $DL_DIR/${ARCH_FNAME}
         cat /Volumes/m_mkl_2017.4.220/m_mkl_2017.4.220.app/Contents/MacOS/silent.cfg | grep -v EULA | grep -v PSET_INSTALL_DIR > silent.cfg
         echo "ACCEPT_EULA=accept" >> silent.cfg
         echo "PSET_INSTALL_DIR=${MKL_INSTALL_DIR}" >> silent.cfg
@@ -119,7 +142,6 @@ script:
   - echo "cmake .. ${CMAKE_OPTIONS}"
   - cmake .. ${CMAKE_OPTIONS}
   - make VERBOSE=1
-  # - cmake --build .
   - |
     if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
       ldd ./CMakeHelloWorld
