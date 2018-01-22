@@ -1,5 +1,5 @@
-[![Build status](https://travis-ci.org/massich/findmkl_cmake_test.svg?branch=master)](https://travis-ci.org/massich/findmkl_cmake_test/branches)
-[![Build status](https://ci.appveyor.com/api/projects/status/h72xi6ffbd7p22j5?svg=true)](https://ci.appveyor.com/project/massich/findmkl-cmake-test)
+[![Build status](https://travis-ci.org/openmeeg/findmkl_cmake.svg?branch=master)](https://travis-ci.org/openmeeg/findmkl_cmake/branches)
+[![Build status](https://ci.appveyor.com/api/projects/status/0dfbalwmtix81it8?svg=true)](https://ci.appveyor.com/project/openmeegci/findmkl-cmake)
 
 This repo provides FindMKL.cmake file, which can be used to configure a CMake project that needs Intel MKL.
 We basically took [this](https://github.com/jameskbride/cmake-hello-world) extremely simple C++ example,
