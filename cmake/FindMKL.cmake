@@ -36,7 +36,7 @@ get_filename_component(MKL_ROOT_DIR ${MKL_ROOT_DIR} REALPATH)
 
 if (NOT MKL_ROOT_DIR)
     if (MKL_FIND_REQUIRED)
-        MESSAGE(FATAL_ERROR "Could not find MKL: please set environment variable {MKLROOT}")
+        message(FATAL_ERROR "Could not find MKL: please set environment variable {MKLROOT}")
     else()
         unset(MKL_ROOT_DIR CACHE)
     endif()
@@ -44,12 +44,12 @@ else()
     set(MKL_INCLUDE_DIR ${MKL_ROOT_DIR}/include)
 
     # set arguments to call the MKL provided tool for linking
-	set(MKL_LINK_TOOL ${MKL_ROOT_DIR}/tools/mkl_link_tool)
+    set(MKL_LINK_TOOL ${MKL_ROOT_DIR}/tools/mkl_link_tool)
 
     if (WIN32)
         set(MKL_LINK_TOOL ${MKL_LINK_TOOL}.exe)
     endif()
-    
+
     # check that the tools exists or quit
     if (NOT EXISTS "${MKL_LINK_TOOL}")
         message(FATAL_ERROR "cannot find MKL tool: ${MKL_LINK_TOOL}")
@@ -86,11 +86,11 @@ else()
 
     if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
         list(APPEND MKL_LINK_TOOL_COMMAND "--compiler=clang")
-	elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
+    elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
         list(APPEND MKL_LINK_TOOL_COMMAND "--compiler=intel_c")
-	elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
         list(APPEND MKL_LINK_TOOL_COMMAND "--compiler=ms_c")
-	else()
+    else()
         list(APPEND MKL_LINK_TOOL_COMMAND "--compiler=gnu_c")
     endif()
 
@@ -102,13 +102,13 @@ else()
         list(APPEND MKL_LINK_TOOL_COMMAND "--os=lnx")
     endif()
 
-	set(MKL_LIB_DIR)
+    set(MKL_LIB_DIR)
     if (${CMAKE_SIZEOF_VOID_P} EQUAL 8)
         list(APPEND MKL_LINK_TOOL_COMMAND "--arch=intel64")
-		set(MKL_LIB_DIR "intel64")
+        set(MKL_LIB_DIR "intel64")
     else()
         list(APPEND MKL_LINK_TOOL_COMMAND "--arch=ia-32")
-		set(MKL_LIB_DIR "ia32")
+        set(MKL_LIB_DIR "ia32")
     endif()
 
     if (MKL_USE_sdl)
@@ -177,7 +177,7 @@ else()
 
     else() # UNIX and macOS
         # remove unwanted break
-		string(REGEX REPLACE "\n" "" MKL_LIBS ${MKL_LIBS}) 
+        string(REGEX REPLACE "\n" "" MKL_LIBS ${MKL_LIBS})
         if (MKL_LINK_TOOL_COMMAND MATCHES "static")
             string(REPLACE "$(MKLROOT)" "${MKL_ROOT_DIR}" MKL_LIBRARIES ${MKL_LIBS})
             # hack for lin with libiomp5.a
@@ -227,11 +227,11 @@ else()
     string(REGEX MATCHALL "[-/]D[^\ ]*" MKL_DEFINITIONS ${RESULT_OPTS})
 
     if (CMAKE_FIND_DEBUG_MODE)
-        message("Exectuted command: \n${MKL_LINK_TOOL_COMMAND}")
-        message("Found MKL_LIBRARIES:\n${MKL_LIBRARIES} ")
-        message("Found MKL_DEFINITIONS:\n${MKL_DEFINITIONS} ")
-        message("Found MKL_LIBRARY_DIR:\n${MKL_LIBRARY_DIR} ")
-        message("Found MKL_INCLUDE_DIR:\n${MKL_INCLUDE_DIR} ")
+        message(STATUS "Exectuted command: \n${MKL_LINK_TOOL_COMMAND}")
+        message(STATUS "Found MKL_LIBRARIES:\n${MKL_LIBRARIES} ")
+        message(STATUS "Found MKL_DEFINITIONS:\n${MKL_DEFINITIONS} ")
+        message(STATUS "Found MKL_LIBRARY_DIR:\n${MKL_LIBRARY_DIR} ")
+        message(STATUS "Found MKL_INCLUDE_DIR:\n${MKL_INCLUDE_DIR} ")
     endif()
 
     include(FindPackageHandleStandardArgs)
