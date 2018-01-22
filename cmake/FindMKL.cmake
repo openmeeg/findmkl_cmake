@@ -1,18 +1,31 @@
-# - Try to find the Intel Math Kernel Library
-# Once done this will define
+# Distributed under the OSI-approved BSD 3-Clause License.  See accompanying
+# file Copyright.txt or https://cmake.org/licensing for details.
+
+#.rst:
+# FindMKL
+# -------
 #
-#  MKL_FOUND - system has MKL
-#  MKL_ROOT_DIR - path to the MKL base directory
-#  MKL_INCLUDE_DIR - the MKL include directory
-#  MKL_LIBRARIES - MKL libraries
-#  MKL_LIBRARY_DIR - MKL library dir (for dlls!)
+# Find a Intel® Math Kernel Library (Intel® MKL) installation and provide
+# all necessary variables and macros to compile software for it.
+#
+# MKLROOT is required in your system
 #
 # we use mkl_link_tool to get the library needed depending on variables
 # There are few sets of libraries:
+#
 # Array indexes modes:
+#
+# ::
+#
 # LP - 32 bit indexes of arrays
 # ILP - 64 bit indexes of arrays
+#
+#
+#
 # Threading:
+#
+# ::
+#
 # SEQUENTIAL - no threading
 # INTEL - Intel threading library
 # GNU - GNU threading library
@@ -21,6 +34,48 @@
 # INTEL - Intel MPI library
 # OPEN - Open MPI library
 # SGI - SGI MPT Library
+#
+#
+#
+#
+# The following are set after the configuration is done:
+#
+# ::
+#
+#  MKL_FOUND        -  system has MKL
+#  MKL_ROOT_DIR     -  path to the MKL base directory
+#  MKL_INCLUDE_DIR  -  the MKL include directory
+#  MKL_LIBRARIES    -  MKL libraries
+#  MKL_LIBRARY_DIR  -  MKL library dir (for dlls!)
+#
+#
+#
+# Sample usage:
+#
+# If MKL is required (i.e., not an optional part):
+#
+# ::
+#
+#    find_package(MKL REQUIRED)
+#    if (MKL_FOUND)
+#        include_directories(${MKL_INCLUDE_DIR})
+#        # and for each of your dependent executable/library targets:
+#        target_link_libraries(<YourTarget> ${MKL_LIBRARIES})
+#    endif()
+
+
+# NOTES
+#
+# If you want to use the module and your build type is not supported
+# out-of-the-box, please contact me to exchange information on how
+# your system is setup and I'll try to add support for it.
+#
+# AUTHOR
+#
+# Joan MASSICH (joan.massich-vall.AT.inria.fr).
+# Alexandre GRAMFORT (Alexandre.Gramfort.AT.inria.fr)
+# Théodore PAPADOPOULO (papadop.AT.inria.fr)
+
 
 set(CMAKE_FIND_DEBUG_MODE 1)
 
