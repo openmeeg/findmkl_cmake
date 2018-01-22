@@ -9,6 +9,13 @@ Tests are run on Mac, Linux and Windows, using both static or dynamic libraries.
 
 To find the correct libraries to use at compilation, FindMKL.cmake uses the [mkl_link_tool](https://software.intel.com/en-us/articles/intel-mkl-command-line-link-tool) command. On Linux, it means that you need to be able to execute 32bits binaries (see our Travis config file).
 
+### How to use this project ###
+Actually you can use this project in whatever manner you like. But we think that there are two main ways to use this project:
+
+1. Clone/Fork/Download the entire project and use it as your starting point. This has the advantage that travis and appveyor would be already configured, for you. The only step required to have CI up and running would be to activate your porject in those platforms.
+
+2. Download [`FindMKL.cmake`](./cmake/FindMKL.cmake) and place it wherever is needed in your project.
+
 ### How to run this example ###
 The best way to understand how to run a project (or install its dependencies) is always looking to CI's configuration ([.travis.yml](./.travis.yml) and [.appveyor.yml](./.appveyor.yml)). 
 But as a summary, as this is an example of how to use MKL and CMake you'll need to [install MKL](https://software.intel.com/en-us/articles/intel-mkl-113-install-guide) and [download CMake](http://www.cmake.org/cmake/resources/software.html). If you are using an ubuntu, CMake can be install it via:
@@ -21,10 +28,3 @@ mkdir build
 cd build
 cmake .. && cmake --build .
 ```
-
-### How to use this project ###
-Actually you can use this project in whatever manner you like. But we think that there are two main ways to use this project:
-
-1. Clone/Fork/Download the entire project and use it as your starting point. This has the advantage that travis and appveyor would be already configured, for you. The only step required to have CI up and running would be to activate your porject in those platforms.
-
-2. Download [`FindMKL.cmake`](./cmake/FindMKL.cmake) and place it wherever is needed in your project.
