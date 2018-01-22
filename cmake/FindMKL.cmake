@@ -104,7 +104,7 @@ else()
     if (WIN32)
         set(MKL_LINK_TOOL ${MKL_LINK_TOOL}.exe)
     endif()
-    
+
     # check that the tools exists or quit
     if (NOT EXISTS "${MKL_LINK_TOOL}")
         message(FATAL_ERROR "cannot find MKL tool: ${MKL_LINK_TOOL}")
@@ -232,7 +232,7 @@ else()
 
     else() # UNIX and macOS
         # remove unwanted break
-		string(REGEX REPLACE "\n" "" MKL_LIBS ${MKL_LIBS}) 
+		string(REGEX REPLACE "\n" "" MKL_LIBS ${MKL_LIBS})
         if (MKL_LINK_TOOL_COMMAND MATCHES "static")
             string(REPLACE "$(MKLROOT)" "${MKL_ROOT_DIR}" MKL_LIBRARIES ${MKL_LIBS})
             # hack for lin with libiomp5.a
