@@ -1,12 +1,8 @@
 cmake_minimum_required (VERSION 3.2)
-project (CMakeHelloWorld)
-
-#version number
-set (CMakeHelloWorld_VERSION_MAJOR 1)
-set (CMakeHelloWorld_VERSION_MINOR 0)
+project (CMakeHelloWorld VERSION 1.0)
 
 # Find the BLAS stuff
-set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
+list(INSERT 0 CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 set(BLA_DEFINITIONS)
 
