@@ -32,12 +32,12 @@ endif()
 message(STATUS "BLAS Libraries: ${BLAS_LIBRARIES}")
 
 # include the subdirectory containing our libs
-add_subdirectory(Hello)
-include_directories(Hello)
+add_subdirectory(myLib_Hello)
+include_directories(myLib_Hello)
 # indicate the entry point for the executable
-add_executable(CMakeHelloWorld Hello HelloWorld.cpp)
+add_executable(hello myLib_Hello HelloWorld.cpp)
 
 # Indicate which libraries to include during the link process.
-target_link_libraries(CMakeHelloWorld Hello ${BLAS_LIBRARIES})
+target_link_libraries(hello myLib_Hello ${BLAS_LIBRARIES})
 
 # install (TARGETS CMakeHelloWorld DESTINATION bin)
