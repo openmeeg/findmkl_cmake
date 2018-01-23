@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 3.2)
 project (CMakeHelloWorld VERSION 1.0)
 
 # Find the BLAS stuff
-list(INSERT 0 CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 set(BLA_DEFINITIONS)
 
