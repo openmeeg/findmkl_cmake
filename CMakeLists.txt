@@ -24,7 +24,7 @@ endif()
 find_package(MKL REQUIRED)
 
 if (MKL_FOUND)
-    include_directories(${MKL_INCLUDE_DIR})
+    set(BLA_INCLUDE_DIR ${MKL_INCLUDE_DIR})
     set(BLAS_LIBRARIES ${MKL_LIBRARIES})
     set(BLA_DEFINITIONS USE_MKL)
 endif()
@@ -33,7 +33,6 @@ message(STATUS "BLAS Libraries: ${BLAS_LIBRARIES}")
 
 # include the subdirectory containing our libs
 add_subdirectory(Hello_lib)
-include_directories(Hello_lib)
 # indicate the entry point for the executable
 add_executable(hello Hello_lib HelloWorld.cpp)
 
