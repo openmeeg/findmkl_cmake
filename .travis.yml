@@ -144,13 +144,13 @@ script:
   - make VERBOSE=1
   - |
     if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-      ldd ./CMakeHelloWorld
+      ldd ./hello
     else  # Mac
-      otool -L ./CMakeHelloWorld
+      otool -L ./hello
     fi
 
 after_success:
-  - ./CMakeHelloWorld
+  - ./hello
 
 notifications:
   email: false
