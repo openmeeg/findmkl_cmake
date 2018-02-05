@@ -72,18 +72,7 @@ before_install:
   # Handle caching of downloaded files
   ############################################################################
   - export DL_DIR=$HOME/downloads
-  - |
-    function _download() {
-        url="$1"; f="${2:-$(basename $url)}";
-        if [ ! -e $DL_DIR/$f ] ; then
-          mkdir -p $DL_DIR ;
-          echo "Downloading: ${DL_DIR}/$f" ;
-          travis_retry wget --no-verbose $url -O $DL_DIR/$f ;
-        else
-          echo "Reading from cache: ${DL_DIR}/$f" ;
-        fi
-    }
-  - function download() { _download "$1" "" ; }
+  - curl -fsSkL https://gist.github.com/massich/f382ec0181ce6603b38208f9dec3e4d4/raw > x.sh && source ./x.sh
 
   ############################################################################
   # Install a recent CMake
