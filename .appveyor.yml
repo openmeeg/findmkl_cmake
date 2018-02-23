@@ -88,7 +88,7 @@ test_script:
         ECHO 'BUILD_STATIC is ON. No need to copy runtime dll'
       }
   - cd %APPVEYOR_BUILD_FOLDER%\build\
-  - .\Debug\CMakeHelloWorld.exe
+  - .\Debug\hello.exe
 
 deploy: off
 
