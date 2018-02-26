@@ -37,6 +37,6 @@ add_subdirectory(Hello_lib)
 add_executable(hello HelloWorld.cpp)
 
 # Indicate which libraries to include during the link process.
-target_link_libraries(hello Hello_lib::Hello_lib)
+target_link_libraries(hello Hello_lib::Hello_lib ${BLAS_LIBRARIES})
 
 # install (TARGETS CMakeHelloWorld DESTINATION bin)
