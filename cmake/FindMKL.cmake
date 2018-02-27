@@ -293,4 +293,13 @@ else()
     find_package_handle_standard_args(MKL DEFAULT_MSG MKL_INCLUDE_DIR MKL_LIBRARIES)
 
     mark_as_advanced(MKL_INCLUDE_DIR MKL_LIBRARIES MKL_DEFINITIONS MKL_ROOT_DIR)
+
+    message(${CMAKE_CURRENT_SOURCE_DIR}/dummy.cpp)
+    if (MKL_FOUND AND NOT TARGET dummy_target)
+        add_library(dummy_target SHARED ${CMAKE_CURRENT_SOURCE_DIR}/cmake/dummy.cpp)
+        target_link_libraries(dummy_target PUBLIC ${MKL_LIBRARIES})
+        target_include_directories(dummy_target PUBLIC ${MKL_INCLUDE_DIR})
+        target_compile_definitions(dummy_target PUBLIC ${MKL_DEFINITIONS})
+        add_library(MKL::MKL ALIAS dummy_target)
+    endif()
 endif()
