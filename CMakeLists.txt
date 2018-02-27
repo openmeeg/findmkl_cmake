@@ -52,3 +52,29 @@ add_executable(hello HelloWorld.cpp)
 target_link_libraries(hello Hello_lib::Hello_lib)
 
 install (TARGETS hello DESTINATION bin)
+
+#-----------------------------------------------
+# packaging
+#-----------------------------------------------
+option(ENABLE_PACKAGING "Enable Packaging" ON)
+
+if (ENABLE_PACKAGING)
+    # set variables
+    set(CPACK_PACKAGE_NAME "${PROJECT_NAME}")
+    set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "${PROJECT_NAME} summary")
+    set(CPACK_PACKAGE_DESCRIPTION "${PROJECT_NAME} description.")
+    set(CPACK_PACKAGE_VENDOR "${PROJECT_NAME} developers")
+    set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
+
+    set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_SOURCE_DIR}/README.md")
+    # set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE.txt")  # XXX
+
+    set(CPACK_PACKAGE_CONTACT "list@project.com")
+    set(CPACK_PACKAGE_INSTALL_DIRECTORY "${PROJECT_NAME}")
+    set(CPACK_SOURCE_STRIP_FILES "")
+
+    # Following https://blog.quickmediasolutions.com/2017/11/24/using-windeployqt-with-cpack.html
+    set(CMAKE_INSTALL_UCRT_LIBRARIES TRUE)
+    include(InstallRequiredSystemLibraries)
+    include(CPack)
+endif()

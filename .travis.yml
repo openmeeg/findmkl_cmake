@@ -112,6 +112,9 @@ script:
   - cmake -DCMAKE_INSTALL_PREFIX=/tmp/cmake .
   - make install
   - /tmp/cmake/bin/hello
+  - make package
+  - tar xvzf CMakeHelloWorld-1.0-*.tar.gz
+  - ./CMakeHelloWorld-1.0-*/bin/hello
 
 after_success:
   - ./hello
