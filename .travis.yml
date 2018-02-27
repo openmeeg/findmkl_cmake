@@ -109,6 +109,9 @@ script:
     else  # Mac
       otool -L ./hello
     fi
+  - cmake -DCMAKE_INSTALL_PREFIX=/tmp/cmake .
+  - make install
+  - /tmp/cmake/bin/hello
 
 after_success:
   - ./hello
