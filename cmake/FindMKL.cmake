@@ -162,7 +162,7 @@ else()
         list(APPEND MKL_LINK_TOOL_COMMAND "--arch=intel64")
         set(MKL_LIB_DIR "intel64")
     else()
-        list(APPEND MKL_LINK_TOOL_COMMAND "--arch=ia-32")
+        list(APPEND MKL_LINK_TOOL_COMMAND "--arch=ia32")
         set(MKL_LIB_DIR "ia32")
     endif()
 
