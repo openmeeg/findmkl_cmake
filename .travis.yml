@@ -34,18 +34,22 @@ matrix:
     # OSx Machines
     #########
     - os: osx
+      osx_image: xcode9.2
       env:
         - BACKEND=Intel10_64lp_seq
         - BUILD_STATIC=OFF
     - os: osx
+      osx_image: xcode9.2
       env:
         - BACKEND=Intel10_64lp_seq
         - BUILD_STATIC=ON
     - os: osx
+      osx_image: xcode9.2
       env:
         - BACKEND=Intel10_64lp
         - BUILD_STATIC=OFF
     - os: osx
+      osx_image: xcode9.2
       env:
         - BACKEND=Intel10_64lp
         - BUILD_STATIC=ON
