@@ -77,7 +77,7 @@
 # Théodore PAPADOPOULO (papadop.AT.inria.fr)
 
 
-set(CMAKE_FIND_DEBUG_MODE 1)
+set(FINDMKL_DEBUG_MODE 1)
 
 # unset this variable defined in matio
 unset(MSVC)
@@ -281,7 +281,7 @@ else()
     execute_process(COMMAND ${MKL_LINK_TOOL_COMMAND} OUTPUT_VARIABLE RESULT_OPTS TIMEOUT 2 ERROR_QUIET)
     string(REGEX MATCHALL "[-/]D[^\ ]*" MKL_DEFINITIONS ${RESULT_OPTS})
 
-    if (CMAKE_FIND_DEBUG_MODE)
+    if (FINDMKL_DEBUG_MODE)
         message(STATUS "Exectuted command: \n${MKL_LINK_TOOL_COMMAND}")
         message(STATUS "Found MKL_LIBRARIES:\n${MKL_LIBRARIES} ")
         message(STATUS "Found MKL_DEFINITIONS:\n${MKL_DEFINITIONS} ")
