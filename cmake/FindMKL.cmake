@@ -99,7 +99,12 @@ else()
     set(MKL_INCLUDE_DIR ${MKL_ROOT_DIR}/include)
 
     # set arguments to call the MKL provided tool for linking
-    set(MKL_LINK_TOOL ${MKL_ROOT_DIR}/tools/mkl_link_tool)
+    if (EXISTS "${MKL_ROOT_DIR}/bin/mkl_link_tool")
+      # this path is used by MKL 2020.1.217 and newer
+      set(MKL_LINK_TOOL "${MKL_ROOT_DIR}/bin/mkl_link_tool")
+    elseif (EXISTS "${MKL_ROOT_DIR}/tools/mkl_link_tool")
+      set(MKL_LINK_TOOL "${MKL_ROOT_DIR}/tools/mkl_link_tool")
+    endif()
 
     if (WIN32)
         set(MKL_LINK_TOOL ${MKL_LINK_TOOL}.exe)
