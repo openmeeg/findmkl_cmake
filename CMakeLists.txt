@@ -4,8 +4,6 @@ project (CMakeHelloWorld VERSION 1.0)
 # Find the BLAS stuff
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-set(BLA_DEFINITIONS)
-
 if ("$ENV{MKLROOT}" STREQUAL "")
     message(FATAL_ERROR "MKLROOT is not set. Please source the Intel MKL mklvars.sh file.")
 endif()
@@ -22,14 +20,6 @@ else()
 endif()
 
 find_package(MKL REQUIRED)
-
-if (MKL_FOUND)
-    set(BLA_INCLUDE_DIR ${MKL_INCLUDE_DIR})
-    set(BLAS_LIBRARIES ${MKL_LIBRARIES})
-    set(BLA_DEFINITIONS USE_MKL)
-endif()
-
-message(STATUS "BLAS Libraries: ${BLAS_LIBRARIES}")
 
 # include the subdirectory containing our libs
 add_subdirectory(Hello_lib)
