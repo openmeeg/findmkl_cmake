@@ -96,29 +96,30 @@ if (NOT MKL_ROOT_DIR)
         unset(MKL_ROOT_DIR CACHE)
     endif()
 else()
+    # set arguments to call the MKL-provided tool for linking
     set(MKL_INCLUDE_DIR ${MKL_ROOT_DIR}/include)
 
-    # set arguments to call the MKL provided tool for linking
-    if (EXISTS "${MKL_ROOT_DIR}/bin/intel64/mkl_link_tool")
-      # this path is used by MKL 2021.1.1 and newer
-      set(MKL_LINK_TOOL "${MKL_ROOT_DIR}/bin/intel64/mkl_link_tool")
-    elseif (EXISTS "${MKL_ROOT_DIR}/bin/mkl_link_tool")
-      # this path is used by MKL 2020.1.217 and newer
-      set(MKL_LINK_TOOL "${MKL_ROOT_DIR}/bin/mkl_link_tool")
-    elseif (EXISTS "${MKL_ROOT_DIR}/tools/mkl_link_tool")
-      set(MKL_LINK_TOOL "${MKL_ROOT_DIR}/tools/mkl_link_tool")
-    endif()
-
+    # determine the name of the MKL-provided tool for linking
     if (WIN32)
-        set(MKL_LINK_TOOL ${MKL_LINK_TOOL}.exe)
+        set(MKL_LINK_TOOL_BINARY mkl_link_tool.exe)
+    else()
+        set(MKL_LINK_TOOL_BINARY mkl_link_tool)
     endif()
 
-    # check that the tools exists or quit
-    if (NOT EXISTS "${MKL_LINK_TOOL}")
-        message(FATAL_ERROR "cannot find MKL tool: ${MKL_LINK_TOOL}")
+    # determine the path of the MKL-provided tool for linking
+    if (EXISTS "${MKL_ROOT_DIR}/bin/intel64/${MKL_LINK_TOOL_BINARY}")
+        # this path is used by MKL 2021.1.1 and newer
+        set(MKL_LINK_TOOL "${MKL_ROOT_DIR}/bin/intel64/${MKL_LINK_TOOL_BINARY}")
+    elseif (EXISTS "${MKL_ROOT_DIR}/bin/${MKL_LINK_TOOL_BINARY}")
+        # this path is used by MKL 2020.1.217 and newer
+        set(MKL_LINK_TOOL "${MKL_ROOT_DIR}/bin/${MKL_LINK_TOOL_BINARY}")
+    elseif (EXISTS "${MKL_ROOT_DIR}/tools/${MKL_LINK_TOOL_BINARY}")
+        set(MKL_LINK_TOOL "${MKL_ROOT_DIR}/tools/${MKL_LINK_TOOL_BINARY}")
+    else()
+        message(FATAL_ERROR "cannot find MKL link tool in any of the searched locations")
     endif()
 
-    # first the libs
+    # now the libs
     set(MKL_LINK_TOOL_COMMAND ${MKL_LINK_TOOL} "-libs")
 
     # possible versions
