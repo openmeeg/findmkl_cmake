@@ -199,7 +199,8 @@ else()
     endif()
 
     if (MKL_USE_parallel)
-        if (UNIX AND NOT APPLE)
+      	# With icc on linux, supported values by mkl_link_tool for threading library are: iomp5|tbb
+        if (UNIX AND NOT APPLE AND NOT CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
             list(APPEND MKL_LINK_TOOL_COMMAND "--openmp=gomp")
         else()
             list(APPEND MKL_LINK_TOOL_COMMAND "--threading-library=iomp5")
