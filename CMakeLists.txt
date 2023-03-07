@@ -29,6 +29,18 @@ if (MKL_FOUND)
     set(BLA_DEFINITIONS USE_MKL)
 endif()
 
+# Tell CMake to use rpath with the libs we build
+if (APPLE)
+    set(CMAKE_MACOSX_RPATH 1)
+    set(CMAKE_SKIP_BUILD_RPATH  FALSE)
+    set(CMAKE_INSTALL_RPATH "@executable_path/../lib/")
+    set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+elseif(UNIX)  # means if LINUX
+    # to fix the installed rpath so it looks in ../lib
+    # https://www.semipol.de/2012/02/16/relative-rpath-settings-with-cmake.html
+    set(CMAKE_INSTALL_RPATH "$ORIGIN/../lib")
+endif()
+
 message(STATUS "BLAS Libraries: ${BLAS_LIBRARIES}")
 
 # include the subdirectory containing our libs
@@ -39,4 +51,30 @@ add_executable(hello HelloWorld.cpp)
 # Indicate which libraries to include during the link process.
 target_link_libraries(hello Hello_lib::Hello_lib)
 
-# install (TARGETS CMakeHelloWorld DESTINATION bin)
+install (TARGETS hello DESTINATION bin)
+
+#-----------------------------------------------
+# packaging
+#-----------------------------------------------
+option(ENABLE_PACKAGING "Enable Packaging" ON)
+
+if (ENABLE_PACKAGING)
+    # set variables
+    set(CPACK_PACKAGE_NAME "${PROJECT_NAME}")
+    set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "${PROJECT_NAME} summary")
+    set(CPACK_PACKAGE_DESCRIPTION "${PROJECT_NAME} description.")
+    set(CPACK_PACKAGE_VENDOR "${PROJECT_NAME} developers")
+    set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
+
+    set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_SOURCE_DIR}/README.md")
+    # set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE.txt")  # XXX
+
+    set(CPACK_PACKAGE_CONTACT "list@project.com")
+    set(CPACK_PACKAGE_INSTALL_DIRECTORY "${PROJECT_NAME}")
+    set(CPACK_SOURCE_STRIP_FILES "")
+
+    # Following https://blog.quickmediasolutions.com/2017/11/24/using-windeployqt-with-cpack.html
+    set(CMAKE_INSTALL_UCRT_LIBRARIES TRUE)
+    include(InstallRequiredSystemLibraries)
+    include(CPack)
+endif()
